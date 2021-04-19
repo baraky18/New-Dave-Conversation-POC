@@ -2,13 +2,13 @@ package com.conversationpoc.tonypizza.model;
 
 public class FormInfo {
 
-	private ParameterInfo parameterInfo;
+	private ParameterInfo[] parameterInfo;
 
-	public ParameterInfo getParameterInfo() {
+	public ParameterInfo[] getParameterInfo() {
 		return parameterInfo;
 	}
 
-	public void setParameterInfo(ParameterInfo parameterInfo) {
+	public void setParameterInfo(ParameterInfo[] parameterInfo) {
 		this.parameterInfo = parameterInfo;
 	}
 }
