@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.conversationpoc.tonypizza.model.FulfillmentResponse;
+import com.conversationpoc.tonypizza.model.ResponseMessage;
+import com.conversationpoc.tonypizza.model.Text;
 import com.conversationpoc.tonypizza.model.WebhookRequest;
 import com.conversationpoc.tonypizza.model.WebhookResponse;
 
@@ -32,8 +35,16 @@ public class WebhookController {
 		if(totalAmountAsDouble < 
 				((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue()){
 			System.out.println("sababa");
+			Text text = new Text();
+			text.setText(new String[]{"sababa", "betaba"});
+			ResponseMessage[] responseMessage = new ResponseMessage[1];
+			responseMessage[0] = new ResponseMessage();
+			responseMessage[0].setText(text);
+			FulfillmentResponse fulfillmentResponse = new FulfillmentResponse();
+			fulfillmentResponse.setMessages(responseMessage);
 			webhookRequest.getSessionInfo().getParameters().replace("totaldeclaredamount", 5);
 			webhookResponse.setSessionInfo(webhookRequest.getSessionInfo());
+			webhookResponse.setFulfillmentResponse(fulfillmentResponse);
 		}
 		return webhookResponse;
 	}
