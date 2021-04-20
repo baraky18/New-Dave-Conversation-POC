@@ -1,5 +1,7 @@
 package com.conversationpoc.tonypizza.controllers;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +21,11 @@ public class WebhookController {
 		System.out.println("-----parameters are: " + webhookRequest.getSessionInfo().getParameters() + "-----");
 
 		//-----parameters are: {drinkorder=[{original=soda, drink=soda}], pizzasize=[large], pizzatype=[napolitana], totalAmount=1, totalDeclaredAmount=1}-----
-		double[] totalAmount = (double[]) webhookRequest.getSessionInfo().getParameters().get("totalamount");
+		List<Double> totalAmount = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalamount");
 		double totalAmountAsDouble = 0;
-		for(int i=0; i<totalAmount.length; i++){
+		for(int i=0; i<totalAmount.size(); i++){
 //			totalAmountAsDouble += (Double.parseDouble(totalAmount[i]));
-			totalAmountAsDouble += totalAmount[i];
+			totalAmountAsDouble += totalAmount.get(i);
 		}
 		System.out.println("-----totalAmountAsDouble is: " + totalAmountAsDouble + "-----"); 
 		
