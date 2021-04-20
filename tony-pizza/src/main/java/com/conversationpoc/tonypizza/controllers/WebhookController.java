@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.conversationpoc.tonypizza.model.SessionInfo;
 import com.conversationpoc.tonypizza.model.WebhookRequest;
 import com.conversationpoc.tonypizza.model.WebhookResponse;
 
@@ -17,6 +18,14 @@ public class WebhookController {
 	public WebhookResponse helloWorld(@RequestBody WebhookRequest webhookRequest){
 		System.out.println("-----session is: " + webhookRequest.getSessionInfo().getSession() + "-----");
 		System.out.println("-----parameters are: " + webhookRequest.getSessionInfo().getParameters() + "-----");
+		//-----parameters are: {drinkorder=[{original=soda, drink=soda}], pizzasize=[large], pizzatype=[napolitana], totalAmount=1, totalDeclaredAmount=1}-----
+		if((int)webhookRequest.getSessionInfo().getParameters().get("totalAmount") < 
+				(int)webhookRequest.getSessionInfo().getParameters().get("totalDeclaredAmount")){
+			System.out.println("sababa");
+			webhookRequest.getSessionInfo().getParameters().replace("totalDeclaredAmount", 5);
+			WebhookResponse webhookResponse = new WebhookResponse();
+			webhookResponse.setSessionInfo(webhookRequest.getSessionInfo());
+		}
 		return new WebhookResponse();
 	}
 }
