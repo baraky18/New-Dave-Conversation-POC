@@ -17,14 +17,14 @@ public class WebhookController {
 	public WebhookResponse helloWorld(@RequestBody WebhookRequest webhookRequest){
 		System.out.println("-----session is: " + webhookRequest.getSessionInfo().getSession() + "-----");
 		System.out.println("-----parameters are: " + webhookRequest.getSessionInfo().getParameters() + "-----");
-		System.out.println("-----totalAmount is: " + webhookRequest.getSessionInfo().getParameters().get("totalAmount").toString() + "-----");
+
 		//-----parameters are: {drinkorder=[{original=soda, drink=soda}], pizzasize=[large], pizzatype=[napolitana], totalAmount=1, totalDeclaredAmount=1}-----
 		String[] totalAmount = (String[]) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
 		double totalAmountAsDouble = 0;
 		for(int i=0; i<totalAmount.length; i++){
 			totalAmountAsDouble += (Double.parseDouble(totalAmount[i]));
 		}
-		 
+		System.out.println("-----totalAmountAsDouble is: " + totalAmountAsDouble + "-----"); 
 		
 		if(totalAmountAsDouble < 
 				Double.parseDouble((String)webhookRequest.getSessionInfo().getParameters().get("totalDeclaredAmount"))){
