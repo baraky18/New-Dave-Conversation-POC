@@ -19,8 +19,8 @@ public class WebhookController {
 		System.out.println("-----parameters are: " + webhookRequest.getSessionInfo().getParameters() + "-----");
 		System.out.println("-----totalAmount is: " + webhookRequest.getSessionInfo().getParameters().get("totalAmount") + "-----");
 		//-----parameters are: {drinkorder=[{original=soda, drink=soda}], pizzasize=[large], pizzatype=[napolitana], totalAmount=1, totalDeclaredAmount=1}-----
-		if(Integer.getInteger((String) webhookRequest.getSessionInfo().getParameters().get("totalAmount"))< 
-				Integer.getInteger((String)webhookRequest.getSessionInfo().getParameters().get("totalDeclaredAmount"))){
+		if(Integer.parseInt((String) webhookRequest.getSessionInfo().getParameters().get("totalAmount")) < 
+				Integer.parseInt((String)webhookRequest.getSessionInfo().getParameters().get("totalDeclaredAmount"))){
 			System.out.println("sababa");
 			webhookRequest.getSessionInfo().getParameters().replace("totalDeclaredAmount", 5);
 			WebhookResponse webhookResponse = new WebhookResponse();
