@@ -30,7 +30,7 @@ public class WebhookController {
 		System.out.println("-----totalAmountAsDouble is: " + totalAmountAsDouble + "-----"); 
 		
 		if(totalAmountAsDouble < 
-				Double.parseDouble((String)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount"))){
+				((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue()){
 			System.out.println("sababa");
 			webhookRequest.getSessionInfo().getParameters().replace("totaldeclaredamount", 5);
 			WebhookResponse webhookResponse = new WebhookResponse();
