@@ -28,14 +28,13 @@ public class WebhookController {
 			totalAmountAsDouble += totalAmount.get(i);
 		}
 		System.out.println("-----totalAmountAsDouble is: " + totalAmountAsDouble + "-----"); 
-		
+		WebhookResponse webhookResponse = new WebhookResponse();
 		if(totalAmountAsDouble < 
 				((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue()){
 			System.out.println("sababa");
 			webhookRequest.getSessionInfo().getParameters().replace("totaldeclaredamount", 5);
-			WebhookResponse webhookResponse = new WebhookResponse();
 			webhookResponse.setSessionInfo(webhookRequest.getSessionInfo());
 		}
-		return new WebhookResponse();
+		return webhookResponse;
 	}
 }
