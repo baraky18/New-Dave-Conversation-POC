@@ -17,6 +17,7 @@ public class WebhookController {
 	public WebhookResponse helloWorld(@RequestBody WebhookRequest webhookRequest){
 		System.out.println("-----session is: " + webhookRequest.getSessionInfo().getSession() + "-----");
 		System.out.println("-----parameters are: " + webhookRequest.getSessionInfo().getParameters() + "-----");
+		System.out.println("-----totalAmount is: " + webhookRequest.getSessionInfo().getParameters().get("totalAmount") + "-----");
 		//-----parameters are: {drinkorder=[{original=soda, drink=soda}], pizzasize=[large], pizzatype=[napolitana], totalAmount=1, totalDeclaredAmount=1}-----
 		if(Integer.getInteger((String) webhookRequest.getSessionInfo().getParameters().get("totalAmount"))< 
 				Integer.getInteger((String)webhookRequest.getSessionInfo().getParameters().get("totalDeclaredAmount"))){
