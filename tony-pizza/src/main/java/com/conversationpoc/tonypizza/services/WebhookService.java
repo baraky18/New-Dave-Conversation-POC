@@ -14,6 +14,7 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 public class WebhookService {
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(WebhookRequest webhookRequest){
+		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
 		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalamount");
 		double totalAmount = 0;
 		for(int i=0; i<totalAmountList.size(); i++){
