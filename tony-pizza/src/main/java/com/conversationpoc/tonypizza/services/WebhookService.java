@@ -15,7 +15,7 @@ public class WebhookService {
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
-		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalamount");
+		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
 		System.out.println("service: " + totalAmountList);
 		double totalAmount = 0;
 		for(int i=0; i<totalAmountList.size(); i++){
