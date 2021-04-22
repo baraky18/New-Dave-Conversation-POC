@@ -27,10 +27,10 @@ public class WebhookService {
 			double difference = totalDeclaredAmount - totalAmount;
 			Text text = new Text();
 			if(difference > 1){
-				text.setText(new String[]{"You asked for total of " + totalDeclaredAmount + " pizzas, so how do you want the other " + totalAmount + " pizzas?"});
+				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the other " + totalAmount + " pizzas?"});
 			}
 			else{
-				text.setText(new String[]{"You asked for total of " + totalDeclaredAmount + " pizzas, so how do you want the last pizza?"});
+				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the last pizza?"});
 			}
 			ResponseMessage[] responseMessage = new ResponseMessage[1];
 			responseMessage[0] = new ResponseMessage();
@@ -38,6 +38,7 @@ public class WebhookService {
 			FulfillmentResponse fulfillmentResponse = new FulfillmentResponse();
 			fulfillmentResponse.setMessages(responseMessage);
 			webhookResponse.setFulfillmentResponse(fulfillmentResponse);
+			webhookResponse.setTransition(null);
 		}
 		return webhookResponse;
 	}

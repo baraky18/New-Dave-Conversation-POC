@@ -19,7 +19,7 @@ public class WebhookController {
 	public WebhookService webhookService;
 	
 	@RequestMapping(value="/is-total-declared-amount-greater-than-total-amount", method=RequestMethod.POST)
-	public WebhookResponse helloWorld(@RequestBody WebhookRequest webhookRequest){
+	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(@RequestBody WebhookRequest webhookRequest){
 		System.out.println("controller: " + webhookRequest.getSessionInfo());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getParameters());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getSession());
