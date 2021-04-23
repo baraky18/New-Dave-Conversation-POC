@@ -15,22 +15,22 @@ public class WebhookService {
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
-		List<Integer> totalAmountList = (List<Integer>) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
+		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
 		System.out.println("service: " + totalAmountList);
-		int totalAmount = 0;
+		double totalAmount = 0;
 		for(int i=0; i<totalAmountList.size(); i++){
 			totalAmount += totalAmountList.get(i);
 		}
 		WebhookResponse webhookResponse = new WebhookResponse();
-		int totalDeclaredAmount = ((Integer)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).intValue();
+		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		if(totalAmount < totalDeclaredAmount){
 			double difference = totalDeclaredAmount - totalAmount;
 			Text text = new Text();
 			if(difference > 1){
-				text.setText(new String[]{"You asked for total of " + totalDeclaredAmount + " pizzas, so how do you want the other " + totalAmount + " pizzas?"});
+				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the other " + totalAmount + " pizzas?"});
 			}
 			else{
-				text.setText(new String[]{"You asked for total of " + totalDeclaredAmount + " pizzas, so how do you want the last pizza?"});
+				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the last pizza?"});
 			}
 			ResponseMessage[] responseMessage = new ResponseMessage[1];
 			responseMessage[0] = new ResponseMessage();
