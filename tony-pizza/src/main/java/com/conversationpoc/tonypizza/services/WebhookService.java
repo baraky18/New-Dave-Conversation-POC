@@ -15,17 +15,17 @@ public class WebhookService {
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
-		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
-		System.out.println("service: " + totalAmountList);
-		double totalAmount = 0;
-		for(int i=0; i<totalAmountList.size(); i++){
-			totalAmount += totalAmountList.get(i);
+		List<Double> detailedAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("detailedamount");
+		System.out.println("service: " + detailedAmountList);
+		double totalOfDetailedAmount = 0;
+		for(int i=0; i<detailedAmountList.size(); i++){
+			totalOfDetailedAmount += detailedAmountList.get(i);
 		}
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
-		if(totalAmount < totalDeclaredAmount){
+		if(totalOfDetailedAmount < totalDeclaredAmount){
 			Text text = new Text();
-			text.setText(new String[]{"What about the other " + totalAmount + "?"});
+			text.setText(new String[]{"What about the other " + totalOfDetailedAmount + "?"});
 			ResponseMessage[] responseMessage = new ResponseMessage[1];
 			responseMessage[0] = new ResponseMessage();
 			responseMessage[0].setText(text);
