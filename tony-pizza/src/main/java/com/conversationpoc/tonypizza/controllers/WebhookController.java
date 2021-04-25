@@ -23,7 +23,7 @@ public class WebhookController {
 		System.out.println("controller: " + webhookRequest.getSessionInfo());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getParameters());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getSession());
-		System.out.println("input value: " + webhookRequest.getIntentInfo().getParameters().toString());
+		System.out.println("input value: " + webhookRequest.getMessages()[0].getText());
 		return webhookService.isTotalDeclaredAmountGreaterThanDetailedAmount(webhookRequest);
 	}
 	
