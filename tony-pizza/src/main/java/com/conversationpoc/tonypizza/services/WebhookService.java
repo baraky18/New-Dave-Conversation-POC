@@ -23,17 +23,20 @@ public class WebhookService {
 		}
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
+		Text text = new Text();
 		if(totalOfDetailedAmount < totalDeclaredAmount){
-			Text text = new Text();
-			text.setText(new String[]{"What about the other " + totalOfDetailedAmount + "?"});
-			ResponseMessage[] responseMessage = new ResponseMessage[1];
-			responseMessage[0] = new ResponseMessage();
-			responseMessage[0].setText(text);
-			FulfillmentResponse fulfillmentResponse = new FulfillmentResponse();
-			fulfillmentResponse.setMessages(responseMessage);
-			webhookResponse.setFulfillmentResponse(fulfillmentResponse);
-			webhookResponse.setTransition(null);
+			text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
 		}
+		else{
+			text.setText(new String[]{"hi, you didn't tell me what would you like to drink?"});
+		}
+		ResponseMessage[] responseMessage = new ResponseMessage[1];
+		responseMessage[0] = new ResponseMessage();
+		responseMessage[0].setText(text);
+		FulfillmentResponse fulfillmentResponse = new FulfillmentResponse();
+		fulfillmentResponse.setMessages(responseMessage);
+		webhookResponse.setFulfillmentResponse(fulfillmentResponse);
+		webhookResponse.setTransition(null);
 		return webhookResponse;
 	}
 }
