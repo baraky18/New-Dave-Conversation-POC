@@ -13,7 +13,7 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 @Service
 public class WebhookService {
 
-	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(WebhookRequest webhookRequest){
+	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
 		List<Double> totalAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("totalAmount");
 		System.out.println("service: " + totalAmountList);
@@ -24,14 +24,8 @@ public class WebhookService {
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		if(totalAmount < totalDeclaredAmount){
-			double difference = totalDeclaredAmount - totalAmount;
 			Text text = new Text();
-			if(difference > 1){
-				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the other " + totalAmount + " pizzas?"});
-			}
-			else{
-				text.setText(new String[]{"You asked for total of " + (int)totalDeclaredAmount + " pizzas, so how do you want the last pizza?"});
-			}
+			text.setText(new String[]{"What about the other " + totalAmount + "?"});
 			ResponseMessage[] responseMessage = new ResponseMessage[1];
 			responseMessage[0] = new ResponseMessage();
 			responseMessage[0].setText(text);

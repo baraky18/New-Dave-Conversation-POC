@@ -18,12 +18,12 @@ public class WebhookController {
 	@Autowired
 	public WebhookService webhookService;
 	
-	@RequestMapping(value="/is-total-declared-amount-greater-than-total-amount", method=RequestMethod.POST)
-	public WebhookResponse isTotalDeclaredAmountGreaterThanTotalAmount(@RequestBody WebhookRequest webhookRequest){
+	@RequestMapping(value="/is-total-declared-amount-greater-than-detailed-amount", method=RequestMethod.POST)
+	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(@RequestBody WebhookRequest webhookRequest){
 		System.out.println("controller: " + webhookRequest.getSessionInfo());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getParameters());
 		System.out.println("controller: " + webhookRequest.getSessionInfo().getSession());
-		return webhookService.isTotalDeclaredAmountGreaterThanTotalAmount(webhookRequest);
+		return webhookService.isTotalDeclaredAmountGreaterThanDetailedAmount(webhookRequest);
 	}
 	
 	
