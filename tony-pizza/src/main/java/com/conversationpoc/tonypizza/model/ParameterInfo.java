@@ -1,5 +1,8 @@
 package com.conversationpoc.tonypizza.model;
 
+import org.springframework.web.context.annotation.SessionScope;
+
+@SessionScope
 public class ParameterInfo {
 
 	private String displayName;

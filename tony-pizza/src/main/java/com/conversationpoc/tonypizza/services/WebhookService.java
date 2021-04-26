@@ -1,11 +1,15 @@
 package com.conversationpoc.tonypizza.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.conversationpoc.tonypizza.model.FormInfo;
 import com.conversationpoc.tonypizza.model.FulfillmentResponse;
+import com.conversationpoc.tonypizza.model.PageInfo;
+import com.conversationpoc.tonypizza.model.ParameterInfo;
 import com.conversationpoc.tonypizza.model.ResponseMessage;
 import com.conversationpoc.tonypizza.model.SessionInfo;
 import com.conversationpoc.tonypizza.model.Text;
@@ -16,7 +20,7 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 public class WebhookService {
 	
 	@Autowired
-	private SessionInfo sessionInfo;
+	private ParameterInfo[] parameterInfo;
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
@@ -30,12 +34,12 @@ public class WebhookService {
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		Text text = new Text();
 		if(totalOfDetailedAmount < totalDeclaredAmount){
-			if(sessionInfo.getParameters() == null){
+			if(parameterInfo.length == 0){
 				text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
-				sessionInfo = webhookRequest.getSessionInfo();
+				parameterInfo = webhookRequest.getPageInfo().getFormInfo().getParameterInfo();
 			}
 			else{
-				addRequestToSession(webhookRequest.getSessionInfo());
+				addRequestToSession(webhookRequest.getPageInfo().getFormInfo().getParameterInfo());
 			}
 		}
 		else{
@@ -48,15 +52,37 @@ public class WebhookService {
 		fulfillmentResponse.setMessages(responseMessage);
 		webhookResponse.setFulfillmentResponse(fulfillmentResponse);
 		webhookResponse.setTransition(null);
-		webhookResponse.setSessionInfo(sessionInfo);
+		FormInfo formInfo = new FormInfo();
+		formInfo.setParameterInfo(parameterInfo);
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setFormInfo(formInfo);
+		webhookResponse.setPageInfo(pageInfo);
+//		webhookResponse.setSessionInfo(sessionInfo);
 		return webhookResponse;
 	}
 
-	private void addRequestToSession(SessionInfo newSessionInfo) {
-		List<String> currentPizzaSize = (List<String>) sessionInfo.getParameters().get("pizzasize");
-		List<String> newPizzaSize = (List<String>) newSessionInfo.getParameters().get("pizzasize");
-		currentPizzaSize.addAll(newPizzaSize);
-		sessionInfo.getParameters().put("pizzasize", currentPizzaSize);
+	private void addRequestToSession(ParameterInfo[] newRequestParameterInfo) {
+		List<String> newPizzaSize = new ArrayList<String>();
+		List<String> currentPizzaSize = new ArrayList<String>();
+		for(ParameterInfo tmpParameterInfo : newRequestParameterInfo){
+			if(tmpParameterInfo.getDisplayName().equalsIgnoreCase("pizzaSize")){
+				newPizzaSize = (List<String>) tmpParameterInfo.getValue();
+				break;
+			}
+		}
+		for(ParameterInfo tmpParameterInfo : parameterInfo){
+			if(tmpParameterInfo.getDisplayName().equalsIgnoreCase("pizzaSize")){
+				currentPizzaSize = (List<String>) tmpParameterInfo.getValue();
+				currentPizzaSize.addAll(newPizzaSize);
+				tmpParameterInfo.setValue(currentPizzaSize);
+				break;
+			}	
+		}
 		System.out.println("currentPizzaSize: " + currentPizzaSize);
+	}
+
+	private void foreach(Object object) {
+		// TODO Auto-generated method stub
+		
 	}
 }
