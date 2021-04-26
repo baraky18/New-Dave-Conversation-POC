@@ -2,6 +2,9 @@ package com.conversationpoc.tonypizza.model;
 
 import java.util.Map;
 
+import org.springframework.web.context.annotation.SessionScope;
+
+@SessionScope
 public class SessionInfo {
 
 	private String session;

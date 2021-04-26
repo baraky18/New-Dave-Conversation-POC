@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.conversationpoc.tonypizza.model.FulfillmentResponse;
 import com.conversationpoc.tonypizza.model.ResponseMessage;
+import com.conversationpoc.tonypizza.model.SessionInfo;
 import com.conversationpoc.tonypizza.model.Text;
 import com.conversationpoc.tonypizza.model.WebhookRequest;
 import com.conversationpoc.tonypizza.model.WebhookResponse;
@@ -15,7 +16,7 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 public class WebhookService {
 	
 	@Autowired
-	private WebhookRequest webhookRequestSession;
+	private SessionInfo sessionInfo;
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
@@ -28,10 +29,14 @@ public class WebhookService {
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		Text text = new Text();
-		if(totalOfDetailedAmount < totalDeclaredAmount && (webhookRequestSession.getSessionInfo() == null || 
-				webhookRequestSession.getSessionInfo().getParameters() == null)){
-			text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
-			webhookRequestSession = webhookRequest;
+		if(totalOfDetailedAmount < totalDeclaredAmount){
+			if(sessionInfo.getParameters() == null){
+				text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
+				sessionInfo = webhookRequest.getSessionInfo();
+			}
+			else{
+				addRequestToSession(webhookRequest.getSessionInfo());
+			}
 		}
 		else{
 			text.setText(new String[]{"hi, you didn't tell me what would you like to drink?"});
@@ -43,6 +48,14 @@ public class WebhookService {
 		fulfillmentResponse.setMessages(responseMessage);
 		webhookResponse.setFulfillmentResponse(fulfillmentResponse);
 		webhookResponse.setTransition(null);
+		webhookResponse.setSessionInfo(sessionInfo);
 		return webhookResponse;
+	}
+
+	private void addRequestToSession(SessionInfo newSessionInfo) {
+		List<String> currentPizzaSize = (List<String>) sessionInfo.getParameters().get("pizzasize");
+		List<String> newPizzaSize = (List<String>) newSessionInfo.getParameters().get("pizzasize");
+		currentPizzaSize.addAll(newPizzaSize);
+		sessionInfo.getParameters().put("pizzasize", currentPizzaSize);
 	}
 }

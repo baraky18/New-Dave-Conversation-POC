@@ -1,8 +1,6 @@
 package com.conversationpoc.tonypizza.model;
 
-import org.springframework.web.context.annotation.SessionScope;
 
-@SessionScope
 public class WebhookRequest {
 
 	private String detectIntentResponseId;
