@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
+import com.conversationpoc.tonypizza.model.WebhookRequest;
 import com.conversationpoc.tonypizza.services.WebhookService;
 
 @Configuration
@@ -14,6 +15,11 @@ public class Configurations {
 	@Bean
 	public WebhookService getWebhookService(){
 		return new WebhookService();
+	}
+	
+	@Bean
+	public WebhookRequest getWebhookRequest(){
+		return new WebhookRequest();
 	}
 	
 	@Bean
