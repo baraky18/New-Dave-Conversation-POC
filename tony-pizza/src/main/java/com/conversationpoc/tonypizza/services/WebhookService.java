@@ -57,5 +57,6 @@ public class WebhookService {
 		List<String> newPizzaSize = (List<String>) newSessionInfo.getParameters().get("pizzasize");
 		currentPizzaSize.addAll(newPizzaSize);
 		sessionInfo.getParameters().put("pizzasize", currentPizzaSize);
+		System.out.println("currentPizzaSize: " + currentPizzaSize);
 	}
 }
