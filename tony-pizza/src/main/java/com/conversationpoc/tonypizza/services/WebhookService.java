@@ -15,7 +15,7 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 public class WebhookService {
 	
 	@Autowired
-	private WebhookRequest webhookRequestSessiont;
+	private WebhookRequest webhookRequestSession;
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
@@ -28,9 +28,10 @@ public class WebhookService {
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		Text text = new Text();
-		if(totalOfDetailedAmount < totalDeclaredAmount && webhookRequestSessiont == null){
+		if(totalOfDetailedAmount < totalDeclaredAmount && (webhookRequestSession.getSessionInfo() == null || 
+				webhookRequestSession.getSessionInfo().getParameters() == null)){
 			text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
-			webhookRequestSessiont = webhookRequest;
+			webhookRequestSession = webhookRequest;
 		}
 		else{
 			text.setText(new String[]{"hi, you didn't tell me what would you like to drink?"});
