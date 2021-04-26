@@ -28,13 +28,13 @@ public class WebhookController {
 	}
 	
 	
-	@RequestMapping(value="/is-total-declared-amount-changed", method=RequestMethod.POST)
-	public WebhookResponse isTotalDeclaredAmountChanged(@RequestBody WebhookRequest webhookRequest){
-		System.out.println("controller: " + webhookRequest.getSessionInfo());
-		System.out.println("controller: " + webhookRequest.getSessionInfo().getParameters());
-		System.out.println("controller: " + webhookRequest.getSessionInfo().getSession());
-//		return webhookService.isTotalDeclaredAmountGreaterThanTotalAmount(webhookRequest);
-		return new WebhookResponse();
-	}
+//	@RequestMapping(value="/is-total-declared-amount-changed", method=RequestMethod.POST)
+//	public WebhookResponse isTotalDeclaredAmountChanged(@RequestBody WebhookRequest webhookRequest){
+//		System.out.println("controller: " + webhookRequest.getSessionInfo());
+//		System.out.println("controller: " + webhookRequest.getSessionInfo().getParameters());
+//		System.out.println("controller: " + webhookRequest.getSessionInfo().getSession());
+////		return webhookService.isTotalDeclaredAmountGreaterThanTotalAmount(webhookRequest);
+//		return new WebhookResponse();
+//	}
 
 }

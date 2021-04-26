@@ -2,6 +2,7 @@ package com.conversationpoc.tonypizza.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.conversationpoc.tonypizza.model.FulfillmentResponse;
@@ -12,6 +13,9 @@ import com.conversationpoc.tonypizza.model.WebhookResponse;
 
 @Service
 public class WebhookService {
+	
+	@Autowired
+	private WebhookRequest webhookRequestSessiont;
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
 		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
@@ -24,8 +28,9 @@ public class WebhookService {
 		WebhookResponse webhookResponse = new WebhookResponse();
 		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		Text text = new Text();
-		if(totalOfDetailedAmount < totalDeclaredAmount){
+		if(totalOfDetailedAmount < totalDeclaredAmount && webhookRequestSessiont == null){
 			text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
+			webhookRequestSessiont = webhookRequest;
 		}
 		else{
 			text.setText(new String[]{"hi, you didn't tell me what would you like to drink?"});
