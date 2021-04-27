@@ -23,20 +23,16 @@ public class WebhookService {
 	
 	@Autowired
 	private ParameterInfo[] parameterInfo;
-	
 	@Autowired
 	private SessionInfo sessionInfo;
+	
+	private List<Double> detailedAmountList;
+	private double totalDeclaredAmount;
+	private double totalOfDetailedAmount;
 
 	public WebhookResponse isTotalDeclaredAmountGreaterThanDetailedAmount(WebhookRequest webhookRequest){
-		System.out.println("service: " + webhookRequest.getSessionInfo().getParameters());
-		List<Double> detailedAmountList = (List<Double>) webhookRequest.getSessionInfo().getParameters().get("detailedamount");
-		System.out.println("service: " + detailedAmountList);
-		double totalOfDetailedAmount = 0;
-		for(int i=0; i<detailedAmountList.size(); i++){
-			totalOfDetailedAmount += detailedAmountList.get(i);
-		}
+		populateAmounts(webhookRequest);
 		WebhookResponse webhookResponse = new WebhookResponse();
-		double totalDeclaredAmount = ((Double)webhookRequest.getSessionInfo().getParameters().get("totaldeclaredamount")).doubleValue();
 		Text text = new Text();
 		if(totalOfDetailedAmount < totalDeclaredAmount){
 			if(isNewSession(webhookRequest.getSessionInfo())){
@@ -65,6 +61,23 @@ public class WebhookService {
 		webhookResponse.setPageInfo(pageInfo);
 //		webhookResponse.setSessionInfo(sessionInfo);
 		return webhookResponse;
+	}
+
+	private void populateAmounts(WebhookRequest webhookRequest) {
+		detailedAmountList = new ArrayList<Double>();
+		totalDeclaredAmount = 1.0;
+		for(int i=0; i<webhookRequest.getPageInfo().getFormInfo().getParameterInfo().length; i++){
+			if(webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getDisplayName().equalsIgnoreCase("detailedAmount")){
+				detailedAmountList = (List<Double>) webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getValue();
+			}
+			else if(webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getDisplayName().equalsIgnoreCase("totalDeclaredAmount")){
+				totalDeclaredAmount = (double) webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getValue();
+			}
+		}
+		totalOfDetailedAmount = 0;
+		for(int i=0; i<detailedAmountList.size(); i++){
+			totalOfDetailedAmount += detailedAmountList.get(i);
+		}
 	}
 
 	private boolean isNewSession(SessionInfo requestSession) {
