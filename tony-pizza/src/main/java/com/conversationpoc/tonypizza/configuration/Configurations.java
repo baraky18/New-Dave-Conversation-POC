@@ -18,10 +18,10 @@ public class Configurations {
 		return new WebhookService();
 	}
 	
-//	@Bean
-//	public SessionInfo getSessionInfo(){
-//		return new SessionInfo();
-//	}
+	@Bean
+	public SessionInfo getSessionInfo(){
+		return new SessionInfo();
+	}
 	
 	@Bean
 	public ParameterInfo[] getParameterInfo(){
