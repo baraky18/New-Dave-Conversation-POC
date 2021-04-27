@@ -68,7 +68,12 @@ public class WebhookService {
 		totalDeclaredAmount = 1.0;
 		for(int i=0; i<webhookRequest.getPageInfo().getFormInfo().getParameterInfo().length; i++){
 			if(webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getDisplayName().equalsIgnoreCase("detailedAmount")){
-				detailedAmountList = (List<Double>) webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getValue();
+				try{
+					detailedAmountList = (List<Double>) webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getValue();
+				}
+				catch(ClassCastException e){
+					detailedAmountList = new ArrayList<Double>();
+				}
 			}
 			else if(webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getDisplayName().equalsIgnoreCase("totalDeclaredAmount")){
 				totalDeclaredAmount = (double) webhookRequest.getPageInfo().getFormInfo().getParameterInfo()[i].getValue();
@@ -108,10 +113,5 @@ public class WebhookService {
 			}	
 		}
 		System.out.println("currentPizzaSize: " + currentPizzaSize);
-	}
-
-	private void foreach(Object object) {
-		// TODO Auto-generated method stub
-		
 	}
 }
