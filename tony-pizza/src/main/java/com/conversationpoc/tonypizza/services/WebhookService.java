@@ -40,6 +40,7 @@ public class WebhookService {
 			}
 			else{
 				addRequestToSession(webhookRequest.getPageInfo().getFormInfo().getParameterInfo());
+				text.setText(new String[]{"hi, you didn't tell me what would you like to drink?"});
 			}
 		}
 		else{
