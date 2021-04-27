@@ -68,7 +68,8 @@ public class WebhookService {
 	}
 
 	private boolean isNewSession(SessionInfo requestSession) {
-		if(sessionInfo.getSession() != null && !sessionInfo.getSession().equalsIgnoreCase(requestSession.getSession())){
+		if(sessionInfo.getSession() == null || 
+				(sessionInfo.getSession() != null && !sessionInfo.getSession().equalsIgnoreCase(requestSession.getSession()))){
 			sessionInfo = requestSession;
 			parameterInfo = new ParameterInfo[0];
 			return true;
