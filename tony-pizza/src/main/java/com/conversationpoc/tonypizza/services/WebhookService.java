@@ -36,7 +36,7 @@ public class WebhookService {
 		Text text = new Text();
 		if(totalOfDetailedAmount < totalDeclaredAmount){
 			if(isNewSession(webhookRequest.getSessionInfo())){
-				text.setText(new String[]{"What about the other " + (int)totalOfDetailedAmount + "?"});
+				text.setText(new String[]{"What about the other " + (int)(totalDeclaredAmount - totalOfDetailedAmount) + "?"});
 				parameterInfo = webhookRequest.getPageInfo().getFormInfo().getParameterInfo();
 			}
 			else{
