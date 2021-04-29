@@ -7,6 +7,7 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.conversationpoc.tonypizza.model.ParameterInfo;
 import com.conversationpoc.tonypizza.model.SessionInfo;
+import com.conversationpoc.tonypizza.model.form.PizzaOrder;
 import com.conversationpoc.tonypizza.services.WebhookService;
 
 @Configuration
@@ -26,6 +27,11 @@ public class Configurations {
 	@Bean
 	public ParameterInfo[] getParameterInfo(){
 		return new ParameterInfo[0];
+	}
+	
+	@Bean
+	public PizzaOrder getPizzaOrder(){
+		return new PizzaOrder();
 	}
 	
 	@Bean
