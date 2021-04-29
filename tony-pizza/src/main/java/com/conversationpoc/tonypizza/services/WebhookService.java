@@ -16,8 +16,8 @@ import com.conversationpoc.tonypizza.model.SessionInfo;
 import com.conversationpoc.tonypizza.model.Text;
 import com.conversationpoc.tonypizza.model.WebhookRequest;
 import com.conversationpoc.tonypizza.model.WebhookResponse;
-import com.conversationpoc.tonypizza.model.form.Pizza;
-import com.conversationpoc.tonypizza.model.form.PizzaOrder;
+//import com.conversationpoc.tonypizza.model.form.Pizza;
+//import com.conversationpoc.tonypizza.model.form.PizzaOrder;
 
 @Service
 @SessionAttributes("sessionInfo")
