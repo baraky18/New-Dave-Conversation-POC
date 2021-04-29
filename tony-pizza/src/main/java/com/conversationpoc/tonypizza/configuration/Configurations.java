@@ -29,10 +29,10 @@ public class Configurations {
 		return new ParameterInfo[0];
 	}
 	
-	@Bean
-	public PizzaOrder getPizzaOrder(){
-		return new PizzaOrder();
-	}
+//	@Bean
+//	public PizzaOrder getPizzaOrder(){
+//		return new PizzaOrder();
+//	}
 	
 	@Bean
 	public CommonsRequestLoggingFilter requestLoggingFilter() {
