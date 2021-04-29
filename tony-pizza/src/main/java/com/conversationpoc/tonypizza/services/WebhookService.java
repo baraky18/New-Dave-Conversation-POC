@@ -27,8 +27,8 @@ public class WebhookService {
 	private ParameterInfo[] parameterInfo;
 	@Autowired
 	private SessionInfo sessionInfo;
-	@Autowired
-	private PizzaOrder pizzaOrder;
+//	@Autowired
+//	private PizzaOrder pizzaOrder;
 	
 	private List<Double> detailedAmountList;
 	private double totalDeclaredAmount;
